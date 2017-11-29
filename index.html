@@ -3,33 +3,34 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 <title>Product Page</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css"> -->
 </head>
 <body>
 
-    <div id="root">
-      <nav class="navbar is-info">
-        <h1 class="title" style="color: white; padding: 10px;">Vuezon</h1>            
-      </nav>
 
-      <product-display :image="product.image" :title="product.title" :desc="product.desc" :price="product.price" :stocked="product.stocked" :variants="product.variants" @update-image="updateImage"></product-display>
+  <div id="root">
+    
+      <h2>{{ product }}</h2>
       
-      <section class="section">
-        <tabs>
-            <tab name="Reviews" :selected="true">
-              <reviews :reviews="product.reviews"></reviews>
-              <review-form @submit-review="submitReview"></review-form>              
-            </tab>
-            <tab name="Details">
-              <p>Brand: {{ product.details.brand }}</p>
-              <p>Material: {{ product.details.material }}</p>
-              <p>Shipping: {{ product.details.shipping }}</p>
-            </tab>
-          </tabs>
-      </section>
+      <img :src="image" :alt="altText" style="width: 40%;" />
+      
+      <p v-if="inStock">In Stock</p>
+      <p v-else>Out of Stock</p>
+      
+      <h3>Details</h3>
+      <ul>
+        <li v-for="detail in details">{{ detail }}</li>
+      </ul>
+      
+      <div v-for="variant in variants" :key="variant.id" v-on:mouseover="updateImage(variant.image)">
+        <!-- <p>Quantity: {{ variant.quantity }}</p> -->
+        <span>{{ variant.color }}</span>
+      </div>
 
-
-    </div>
+      <span>{{ cart }} items in cart.</span>
+      <button v-on:click="addToCart">Add to cart</button>
+      
+  </div>
     
     <script src="https://unpkg.com/vue"></script>
     <script src="main.js"></script>
