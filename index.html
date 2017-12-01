@@ -26,8 +26,8 @@
       </ul>
 
       <h3>Colors:</h3>
-      <div v-for="variant in variants" :key="variant.id" @mouseover="updateProduct(variant.image, variant.quantity)" >
-        <div class="color-box" :style="{ backgroundColor: variant.color }"></div>
+      <div v-for="variant in variants" :key="variant.id">
+        <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity)"></div>
       </div>
 
       <div class="cart">

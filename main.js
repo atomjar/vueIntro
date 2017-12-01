@@ -6,7 +6,6 @@ var app = new Vue({
       brand: "Vue Mastery",
       image: "https://www.sockittome.com/images/detailed/3/F0247.jpg",
       altText: "A pair of socks",
-      // inStock: true,
       quantity: 2,
       details: ["80% cotton", "20% polyester", "Gender-neutral"],
       variants: [
@@ -47,6 +46,8 @@ var app = new Vue({
     }
   }
 })
+
+
 
 
 
