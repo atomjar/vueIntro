@@ -3,32 +3,39 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 <title>Product Page</title>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css"> -->
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 
-  <div id="root">
+  <div id="app">
+
+    <div class="product-image">
+      <img :src="image" :alt="altText" />      
+    </div>
     
-      <h2>{{ product }}</h2>
-      
-      <img :src="image" :alt="altText" style="width: 40%;" />
+    <div class="product-info">
+      <h1>{{ title }}</h1>
       
       <p v-if="inStock">In Stock</p>
       <p v-else>Out of Stock</p>
-      
-      <h3>Details</h3>
+
+      <h2>Details</h2>
       <ul>
         <li v-for="detail in details">{{ detail }}</li>
       </ul>
-      
-      <div v-for="variant in variants" :key="variant.id" v-on:mouseover="updateImage(variant.image)">
-        <!-- <p>Quantity: {{ variant.quantity }}</p> -->
-        <span>{{ variant.color }}</span>
+
+      <h3>Colors:</h3>
+      <div v-for="variant in variants" :key="variant.id" @mouseover="updateProduct(variant.image, variant.quantity)" >
+        <div class="color-box" :style="{ backgroundColor: variant.color }"></div>
       </div>
 
-      <span>{{ cart }} items in cart.</span>
-      <button v-on:click="addToCart">Add to cart</button>
+      <div class="cart">
+        <p>{{ cart }} items in cart</p>
+        <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
+      </div>
+
+    </div>
       
   </div>
     

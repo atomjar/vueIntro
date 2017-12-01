@@ -1,0 +1,49 @@
+body {
+  font-family: tahoma;
+  color:#282828;
+}
+
+#app {
+  display: flex;
+}
+
+img {
+  border: 1px solid #d8d8d8;
+  width: 70%;
+  margin: 40px;
+  box-shadow: 0px .5px 1px #d8d8d8;
+}
+
+.product-image {
+  flex-basis: 700px;
+}
+
+.product-info {
+  margin-top: 10px;
+  flex-basis: 400px;
+}
+
+.color-box {
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+
+.cart {
+  border: 1px solid #d8d8d8;
+  padding: 20px;
+  margin-top: 18px;
+}
+
+button {
+  border: none;
+  background-color: #1E95EA;
+  color: white;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+} 
+
+.disabledButton {
+  background-color: #d8d8d8;
+}

@@ -1,24 +1,26 @@
 
 var app = new Vue({
-  el: '#root',
+  el: '#app',
   data: {
-      product: "T-Shirt",
-      image: "https://cdn.shopify.com/s/files/1/1481/7678/products/doberman-blue-socks-1_1024x1024.jpg?v=1489461300",
-      altText: "A pair of boots",
-      inStock: true,
+      product: "Socks",
+      brand: "Vue Mastery",
+      image: "https://www.sockittome.com/images/detailed/3/F0247.jpg",
+      altText: "A pair of socks",
+      // inStock: true,
+      quantity: 2,
       details: ["80% cotton", "20% polyester", "Gender-neutral"],
       variants: [
       {
         id: 1,
         quantity: 15,
         color: "green",
-        image: "http://picture-cdn.wheretoget.it/k91dyo-i.jpg"      
+        image: "https://www.sockittome.com/images/detailed/3/F0247.jpg"      
       },
       {
         id: 2,
-        quantity: 5,
+        quantity: 0,
         color: "blue",
-        image: "https://cdn.shopify.com/s/files/1/1481/7678/products/doberman-blue-socks-1_1024x1024.jpg?v=1489461300" 
+        image: "https://www.sockittome.com/images/detailed/6/F0374.jpg" 
       }
     ],
     cart: 0
@@ -27,8 +29,21 @@ var app = new Vue({
     addToCart: function() {
       this.cart += 1
     },
-    updateImage: function(hoveredImage) {
-      this.image = hoveredImage
+    updateProduct: function(variantImage, variantQuantity) {
+      this.image = variantImage
+      this.quantity = variantQuantity
+    }
+  },
+  computed: {
+    title: function () {
+      return this.brand + ' ' + this.product
+    },
+    inStock: function () {
+      if (this.quantity > 0) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 })
