@@ -30,7 +30,7 @@ Vue.component('product', {
 
       <h3>Colors:</h3>
       <div v-for="variant in variants" :key="variant.id">
-        <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity)"></div>
+        <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity, variant.id)"></div>
       </div>
 
       <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
@@ -40,7 +40,7 @@ Vue.component('product', {
   `,
   data: function() {
     return {
-      id: "2234",
+      id: "",
       product: "Socks",
       brand: "Vue Mastery",
       image: "https://www.sockittome.com/images/detailed/3/F0247.jpg",
@@ -49,13 +49,13 @@ Vue.component('product', {
       details: ["80% cotton", "20% polyester", "Gender-neutral"],
       variants: [
         {
-          id: 1,
+          id: 2234,
           quantity: 15,
           color: "green",
           image: "https://www.sockittome.com/images/detailed/3/F0247.jpg"      
         },
         {
-          id: 2,
+          id: 2235,
           quantity: 0,
           color: "blue",
           image: "https://www.sockittome.com/images/detailed/6/F0374.jpg" 
@@ -65,11 +65,12 @@ Vue.component('product', {
   },
   methods: {
     addToCart: function() {
-      this.$emit('add-to-cart')
+      this.$emit('add-to-cart', { id: this.id })      
     },
-    updateProduct: function(variantImage, variantQuantity) {
+    updateProduct: function(variantImage, variantQuantity, variantId) {
       this.image = variantImage
       this.quantity = variantQuantity
+      this.id = variantId
     }
   },
   computed: {
@@ -99,11 +100,11 @@ var app = new Vue({
   el: '#app',
   data: {
     premium: true,
-    cart: 0    
+    cart: []  
   },
   methods: {
-    updateCart: function() {
-      this.cart += 1
-    },
+    updateCart: function(product) {
+      this.cart.push(product)
+    }
   }
 })
