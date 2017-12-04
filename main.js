@@ -1,15 +1,31 @@
 Vue.component('product', {
+  props: {
+    premium: {
+      type: Boolean,
+      required: true
+    }
+  },
   template: `
   <div id="product">
+  
     <div class="product-image">
     <img :src="image" :alt="altText" />      
     </div>
-
+    
     <div class="product-info">
+
+      <div class="cart">
+        <p>Cart({{ cart }})</p>
+      </div>
+    
       <h1>{{ title }}</h1>
+
+      <p>Shipping: {{ shipping }}</p>
       
       <p v-if="inStock">In Stock</p>
       <p v-else>Out of Stock</p>
+
+      
 
       <h2>Details</h2>
       <ul>
@@ -21,16 +37,14 @@ Vue.component('product', {
         <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity)"></div>
       </div>
 
-      <div class="cart">
-        <p>{{ cart }} items in cart</p>
-        <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
-      </div>
+      <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
 
     </div>
   </div>
   `,
   data: function() {
     return {
+      id: "2234",
       product: "Socks",
       brand: "Vue Mastery",
       image: "https://www.sockittome.com/images/detailed/3/F0247.jpg",
@@ -73,6 +87,13 @@ Vue.component('product', {
       } else {
         return false
       }
+    },
+    shipping: function () {
+      if (this.premium === true) {
+        return 0.00
+      } else {
+        return 2.99
+      }
     }
   }
 })
@@ -80,5 +101,8 @@ Vue.component('product', {
 
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    premium: true
+  }
 })

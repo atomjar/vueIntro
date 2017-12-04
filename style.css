@@ -20,7 +20,7 @@ img {
 
 .product-info {
   margin-top: 10px;
-  flex-basis: 400px;
+  flex-basis: 500px;
 }
 
 .color-box {
@@ -30,12 +30,13 @@ img {
 }
 
 .cart {
+  float: right;
   border: 1px solid #d8d8d8;
-  padding: 20px;
-  margin-top: 18px;
+  padding: 5px 20px;
 }
 
 button {
+  margin-top: 30px;
   border: none;
   background-color: #1E95EA;
   color: white;
