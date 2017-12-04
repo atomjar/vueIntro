@@ -13,10 +13,6 @@ Vue.component('product', {
     </div>
     
     <div class="product-info">
-
-      <div class="cart">
-        <p>Cart({{ cart }})</p>
-      </div>
     
       <h1>{{ title }}</h1>
 
@@ -64,13 +60,12 @@ Vue.component('product', {
           color: "blue",
           image: "https://www.sockittome.com/images/detailed/6/F0374.jpg" 
         }
-      ],
-      cart: 0
+      ]
     }
   },
   methods: {
     addToCart: function() {
-      this.cart += 1
+      this.$emit('add-to-cart')
     },
     updateProduct: function(variantImage, variantQuantity) {
       this.image = variantImage
@@ -103,6 +98,12 @@ Vue.component('product', {
 var app = new Vue({
   el: '#app',
   data: {
-    premium: true
+    premium: true,
+    cart: 0    
+  },
+  methods: {
+    updateCart: function() {
+      this.cart += 1
+    },
   }
 })
