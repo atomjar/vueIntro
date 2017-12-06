@@ -6,36 +6,38 @@ Vue.component('product', {
     }
   },
   template: `
-  <div id="product">
-  
-    <div class="product-image">
-    <img :src="image" :alt="altText" />      
-    </div>
+  <div>
     
-    <div class="product-info">
-    
-      <h1>{{ title }}</h1>
-
-      <p>Shipping: {{ shipping }}</p>
+    <div id="product">
       
-      <p v-if="inStock">In Stock</p>
-      <p v-else>Out of Stock</p>
-
-      
-
-      <h2>Details</h2>
-      <ul>
-        <li v-for="detail in details">{{ detail }}</li>
-      </ul>
-
-      <h3>Colors:</h3>
-      <div v-for="variant in variants" :key="variant.id">
-        <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity, variant.id)"></div>
+      <div class="product-image">
+      <img :src="image" :alt="altText" />      
       </div>
+      
+      <div class="product-info">
+      
+        <h1>{{ title }}</h1>
 
-      <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
+        <p>Shipping: {{ shipping }}</p>
+        
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of Stock</p>
 
+        <h2>Details</h2>
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+
+        <h3>Colors:</h3>
+        <div v-for="variant in variants" :key="variant.id">
+          <div class="color-box" :style="{ backgroundColor: variant.color }" @mouseover="updateProduct(variant.image, variant.quantity, variant.id)"></div>
+        </div>
+
+        <button :class="{ disabledButton: !inStock }" v-on:click="addToCart" :disabled="!inStock">Add to Cart</button>
+
+      </div>
     </div>
+    <review-form @review-submitted="addReview"></review-form>    
   </div>
   `,
   data: function() {
@@ -60,17 +62,21 @@ Vue.component('product', {
           color: "blue",
           image: "https://www.sockittome.com/images/detailed/6/F0374.jpg" 
         }
-      ]
+      ],
+      reviews: []
     }
   },
   methods: {
     addToCart: function() {
-      this.$emit('add-to-cart', { id: this.id })      
+      this.$emit('add-to-cart', this.id)
     },
     updateProduct: function(variantImage, variantQuantity, variantId) {
       this.image = variantImage
       this.quantity = variantQuantity
       this.id = variantId
+    },
+    addReview: function (review) {
+      this.reviews.push(review)
     }
   },
   computed: {
@@ -90,6 +96,53 @@ Vue.component('product', {
       } else {
         return 2.99
       }
+    }
+  }
+})
+
+
+Vue.component('review-form', {
+  template: `
+    <form class="review-form" v-on:submit.prevent="onSubmit">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" v-model="name">
+      </div>
+
+      <div>
+        <label for="review">Review:</label>      
+        <textarea id="review" v-model="review"></textarea>
+      </div>
+
+      <div>
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model="rating">
+          <option>5</option>
+          <option>4</option>
+          <option>3</option>
+          <option>2</option>
+          <option>1</option>
+        </select>
+      </div>
+
+      <button >Submit</button>
+    </form>
+  `,
+  data: function () {
+    return {
+      name: '',
+      review: '',
+      rating: 5,
+    }
+  },
+  methods: {
+    onSubmit: function () {
+      let review = {
+        name: this.name,
+        review: this.review,
+        rating: this.rating
+      }
+      this.$emit('review-submitted', review)
     }
   }
 })
